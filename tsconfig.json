@@ -6,14 +6,10 @@
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-    "types": [
-      "vite/client",
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types",
-    ],
-    "lib": ["ESNext"]
-  },
+    "types": ["vite/client", "node"],
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["esnext"]
+  }
 }

@@ -6,17 +6,16 @@ on:
     paths:
       - '**.js'
       - '**.ts'
-      - '**.vue'
+      - '**.tsx'
       - 'package-lock.json'
       - '.github/workflows/lint.yml'
   pull_request:
     paths:
       - '**.js'
       - '**.ts'
-      - '**.vue'
+      - '**.tsx'
       - 'package-lock.json'
       - '.github/workflows/lint.yml'
-
 
 defaults:
   run:
