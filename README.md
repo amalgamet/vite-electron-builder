@@ -10,11 +10,11 @@ This is a secure template for [Electron] applications based on the latest securi
 best practices.
 
 Under the hood an insanely fast next-gen bundler [Vite] is used for both development and production bundling, along with
-[`electron-builder`] for compilation.
+[`electron-builder`][electron-builder] for compilation.
 
 ### Support
 
-- This template is forked from [Vite Electron Builder][vite-electron-builder], maintained by [Alex
+- This template is forked from [Vite Electron Builder][cawa-93-repo], maintained by [Alex
   Kozack][cawa-93-github]. You can [💖 sponsor him][cawa-93-sponsor] for continued development of this template.
 
 - Found a problem? Pull requests are welcome.
@@ -48,13 +48,10 @@ If you are using a different package manager, you may need to install your `peer
 
 ### Vite [![Vite version](https://img.shields.io/github/package-json/dependency-version/amalgamet/vite-electron-builder/dev/vite?label=%20)][vite]
 
-- [Vite] is used to bundle all source codes. This is an extremely fast packer that has a bunch of great features. You
+- [Vite] is used to bundle all source code. This is an extremely fast bundler with several great features. You
   can learn more about how it is arranged in [this](https://youtu.be/xXrhg26VCSc) video.
-- Vite [supports](https://vitejs.dev/guide/env-and-mode.html) reading `.env` files. My template has a separate command
-  to generate `.d.ts` file with type definition your environment variables.
-
-Vite provides you with many useful features, such as: `TypeScript`, `TSX/JSX`, `CSS/JSON Importing`, `CSS Modules`,
-`Web Assembly` and much more.
+- Vite supports [reading `.env` files](https://vitejs.dev/guide/env-and-mode.html). This template has a separate command
+  to generate type declaration files with your environment variables.
 
 [See all Vite features](https://vitejs.dev/guide/features.html).
 
@@ -71,38 +68,37 @@ TypeScript.
 ### React [![React version](https://img.shields.io/github/package-json/dependency-version/amalgamet/vite-electron-builder/react?label=%20)][react] (optional)
 
 - By default, web pages are built using [React]. However, you can easily change it. Or do not use additional frameworks
-  at all. (See [the original repository](https://github.com/cawa-93/vite-electron-builder))
+  at all. (See [the original repository](https://github.com/cawa-93/vite-electron-builder) for a Vue example)
 - Code formatting rules adhere to the default [Prettier] config.
 - Installed
   [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
   with React 17 support.
 
-See [examples of web pages for different frameworks](https://github.com/vitejs/vite/tree/main/packages/create-app).
-
 ### Continuous Integration
 
-- The configured workflow for check the types for each push and PR.
-- The configured workflow for check the code style for each push and PR.
-- **Automatic tests** used [spectron]. Simple, automated test check:
-  - Does the main window created and visible?
+There are a few Github Action workflows triggered against PRs or pushes to the `main` branch.
+
+- Check types for main, preload, and renderer code
+- Lint all codecode
+- Run automated tests with [spectron]
+  - Has the main window been created, and is it visible?
   - Is the main window not empty?
-  - Is dev tools closed?
+  - Is devtools closed?
 
 ### Continuous delivery
 
-- Each time you push changes to the `main` branch, [`release`](.github/workflows/release.yml) workflow starts, which
-  creates release draft.
+- The [`release`](.github/workflows/release.yml) workflow is triggered on every push to the `main` branch. This workflow creates a release draft.
   - The version is automatically set based on the current date in the format "yy.mm.dd".
   - Notes are automatically generated and added to the release draft.
-  - Code signing supported. See [`compile` job in `release` workflow](.github/workflows/release.yml).
-- **Auto-update is supported**. After the release will be published, all client applications will download the new
+  - Code signing supported. See the [`compile` job in the `release` workflow](.github/workflows/release.yml).
+- **Auto-update is supported**. After a new release is published, all client applications will download the new
   version and install updates silently.
 
 ## Status
 
 This template was created to make my work easier. It may not be universal, but I try to keep it that way.
 
-I am actively involved in its development. But I do not guarantee that this template will be maintained in the future.
+I am actively involved in its development, but I do not guarantee that this template will be maintained in the future.
 
 **At the moment, there are the following problems:**
 
@@ -119,7 +115,7 @@ Some improvement or problems can be listed in [issues](https://github.com/amalga
 
 ## How it works
 
-The template required a minimum [dependencies](package.json). Only **Vite** is used for building, nothing more.
+Run `npm install` to get all the dependencies.
 
 ### Project Structure
 
@@ -136,20 +132,17 @@ The entire source code of the program is divided into three modules (packages) t
 
 ### Build web resources
 
-Packages `main` and `preload` are built in [library mode](https://vitejs.dev/guide/build.html#library-mode) as it is a
-simple javascript. `renderer` package build as regular web app.
+The `main` and `preload` modules are built in [library mode](https://vitejs.dev/guide/build.html#library-mode) they are simple Node.js-based, well, libraries. The `renderer` module is built as full-fledged web app.
 
-The build of web resources is performed in the [`scripts/build.js`](scripts/build.js). Its analogue is a sequential call
-to `vite build` for each package.
+Building production web resources is handled by [`scripts/build.js`](scripts/build.js), which calls `vite build` sequentially for each package.
 
 ### Compile App
 
-Next step is run packaging and compilation a ready for distribution Electron app for macOS, Windows and Linux with "auto
-update" support out of the box.
+[electron-builder] will package and compile a distribution for your desired target platforms (macOS, Windows, and Linux). Auto-update support is included out-of-the-box.
 
 To do this, using the [electron-builder]:
 
-- In npm script `compile`: This script is configured to compile the application as quickly as possible. It is not ready
+- `npm run compile`: This script is configured to compile the application as quickly as possible. It is not ready
   for distribution, is compiled only for the current platform and is used for debugging.
 - In GitHub Action: The application is compiled for any platform and ready-to-distribute files are automatically added
   to the draft GitHub release.
