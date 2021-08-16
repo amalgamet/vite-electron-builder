@@ -26,7 +26,9 @@ async function getInterfaceByMode(mode) {
   const { env: envForMode } = await resolveConfig({ mode }, 'build');
   return {
     name: interfaceName,
-    declaration: `interface ${interfaceName} extends IBaseEnv ${JSON.stringify(envForMode)}`,
+    declaration: `interface ${interfaceName} extends IBaseEnv ${JSON.stringify(
+      envForMode,
+    )}`,
   };
 }
 
@@ -42,7 +44,9 @@ async function buildMode(modes, filePath) {
   const allDeclarations = interfaces.map((i) => i.declaration);
   const allNames = interfaces.map((i) => i.name);
 
-  const ImportMetaEnvDeclaration = `type ImportMetaEnv = Readonly<${allNames.join(' | ')}>`;
+  const ImportMetaEnvDeclaration = `type ImportMetaEnv = Readonly<${allNames.join(
+    ' | ',
+  )}>`;
 
   const content = `
     ${IBaseEnvDeclaration}

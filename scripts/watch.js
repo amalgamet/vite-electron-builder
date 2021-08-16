@@ -8,7 +8,7 @@ const { spawn } = require('child_process');
 const mode = (process.env.MODE = process.env.MODE || 'development');
 
 /** @type {import('vite').LogLevel} */
-const LOG_LEVEL = 'warn';
+const LOG_LEVEL = 'info';
 
 /** @type {import('vite').InlineConfig} */
 const sharedConfig = {
@@ -66,8 +66,17 @@ const setupMainPackageWatcher = (viteDevServer) => {
 
       spawnProcess = spawn(String(electronPath), ['.']);
 
-      spawnProcess.stdout.on('data', (d) => d.toString().trim() && logger.warn(d.toString(), { timestamp: true }));
-      spawnProcess.stderr.on('data', (d) => d.toString().trim() && logger.error(d.toString(), { timestamp: true }));
+      spawnProcess.stdout.on(
+        'data',
+        (d) =>
+          d.toString().trim() && logger.warn(d.toString(), { timestamp: true }),
+      );
+      spawnProcess.stderr.on(
+        'data',
+        (d) =>
+          d.toString().trim() &&
+          logger.error(d.toString(), { timestamp: true }),
+      );
     },
   });
 };

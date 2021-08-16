@@ -22,7 +22,11 @@ app
   .then(async function () {
     // Get the window content
     const content = await app.client.$('#app');
-    assert.notStrictEqual(await content.getHTML(), '<div id="app"></div>', 'Window content is empty');
+    assert.notStrictEqual(
+      await content.getHTML(),
+      '<div id="app"></div>',
+      'Window content is empty',
+    );
   })
 
   .then(function () {

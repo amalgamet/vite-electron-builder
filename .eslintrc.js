@@ -51,5 +51,6 @@ module.exports = {
     'react/no-children-prop': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
   },
 };

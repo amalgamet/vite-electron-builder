@@ -68,7 +68,7 @@ Vite provides you with many useful features, such as: `TypeScript`, `TSX/JSX`, `
 **[See this discussion](https://github.com/cawa-93/vite-electron-builder/discussions/339)** if you want completly remove
 TypeScript.
 
-### React [![React version](https://img.shields.io/github/package-json/dependency-version/cawa-93/vite-electron-builder/react?label=%20)][react] (optional)
+### React [![React version](https://img.shields.io/github/package-json/dependency-version/amalgamet/vite-electron-builder/react?label=%20)][react] (optional)
 
 - By default, web pages are built using [React]. However, you can easily change it. Or do not use additional frameworks
   at all. (See [the original repository](https://github.com/cawa-93/vite-electron-builder))
